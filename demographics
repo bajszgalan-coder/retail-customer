@@ -1,0 +1,32 @@
+path = "../project_data/hh_demographic.csv"
+columns = ["AGE_DESC", "INCOME_DESC", "household_key", "HH_COMP_DESC"]
+demographics_types = {"AGE_DESC" : "category", "INCOME_DESC" : "category", "HH_COMP_DESC" : "category"}
+
+demographics = pd.read_csv(
+    path, 
+    usecols = columns,
+    dtype = demographics_types 
+)
+
+
+(household_sales_demo
+    .groupby("AGE_DESC", observed = False)
+    .agg({"SALES_VALUE" : "sum"})
+    .plot.bar()
+)
+
+(household_sales_demo
+    .groupby("INCOME_DESC", observed = False)
+    .agg({"SALES_VALUE" : "sum"})
+    .sort_values("SALES_VALUE", ascending = False)
+    .plot.bar()
+)
+
+household_sales_demo.pivot_table(
+    index = ["AGE_DESC"],
+    columns = ["HH_COMP_DESC"],
+    values = "SALES_VALUE",
+    aggfunc = "mean",
+    margins = True,
+    observed = False
+).style.background_gradient(cmap = "RdYlGn", axis = None)
