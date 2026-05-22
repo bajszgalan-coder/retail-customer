@@ -8,6 +8,13 @@ demographics = pd.read_csv(
     dtype = demographics_types 
 )
 
+household_sales_demo = demographics.merge(
+    household_sales,
+    how = "inner",
+    left_on =["household_key"],
+    right_on = ["household_key"]
+)
+household_sales_demo.head()
 
 (household_sales_demo
     .groupby("AGE_DESC", observed = False)
