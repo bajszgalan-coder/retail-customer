@@ -1,0 +1,28 @@
+transactions.set_index("date").loc[:, "SALES_VALUE"].resample("ME").sum().plot()
+
+(transactions
+ .set_index("date")
+ .sort_index() # mit sort_index() werden die index sortiert 
+ .loc["2016-04":"2017-10", "SALES_VALUE"] 
+#.loc[:, "SALES_VALUE"] hier wurde alle Zeilen mit : gewählt aber oben
+# nur Zeilen zwischen "2016-04":"2017-10"
+ .resample("ME")
+ .sum()
+ .plot())
+
+(transactions
+ .set_index("date")
+ .sort_index() 
+ .loc[:, ["SALES_VALUE"]] 
+ .resample("ME")
+ .sum()
+ .assign(year_prior= lambda x: x["SALES_VALUE"].shift(12))
+ .loc["2017"]
+ .plot()
+)
+
+(transactions
+    .groupby(transactions["date"].dt.dayofweek)
+    .agg({"SALES_VALUE" : "sum"})
+    .plot.bar()
+)
