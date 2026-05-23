@@ -1,14 +1,11 @@
-transactions.set_index("date").loc[:, "SALES_VALUE"].resample("ME").sum().plot()
+Year-over-Year Monthly Sales Analysis
 
-(transactions
- .set_index("date")
- .sort_index() # mit sort_index() werden die index sortiert 
- .loc["2016-04":"2017-10", "SALES_VALUE"] 
-#.loc[:, "SALES_VALUE"] hier wurde alle Zeilen mit : gewählt aber oben
-# nur Zeilen zwischen "2016-04":"2017-10"
- .resample("ME")
- .sum()
- .plot())
+Business Question
+How did monthly sales performance evolve in 2017 compared to the previous year?
+
+Methodology
+Monthly sales were aggregated using time-series resampling. A year-over-year comparison was created by shifting monthly sales values by 12 months to align equivalent reporting periods.
+This approach enables trend comparison, seasonality analysis, and identification of performance deviations across time.
 
 (transactions
  .set_index("date")
@@ -21,8 +18,9 @@ transactions.set_index("date").loc[:, "SALES_VALUE"].resample("ME").sum().plot()
  .plot()
 )
 
-(transactions
-    .groupby(transactions["date"].dt.dayofweek)
-    .agg({"SALES_VALUE" : "sum"})
-    .plot.bar()
-)
+
+
+Key Insight
+Monthly sales in 2017 show a generally stable performance pattern across most of the year. From April to November, sales remained relatively consistent compared to prior-year levels, with an average year-over-year deviation of approximately 28,000 in monthly sales.
+Higher volatility is observed in early-year and year-end periods, indicating seasonal fluctuations and temporary deviations in demand patterns.
+
