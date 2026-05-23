@@ -1,20 +1,12 @@
-path = "../project_data/hh_demographic.csv"
-columns = ["AGE_DESC", "INCOME_DESC", "household_key", "HH_COMP_DESC"]
-demographics_types = {"AGE_DESC" : "category", "INCOME_DESC" : "category", "HH_COMP_DESC" : "category"}
+Customer Demographics Analysis
 
-demographics = pd.read_csv(
-    path, 
-    usecols = columns,
-    dtype = demographics_types 
-)
+🎯 Objective
+This section explores customer purchasing behavior across different demographic segments, focusing on age groups and household composition. 
+The goal is to identify which customer segments generate the highest sales and how spending behavior varies across household types.
 
-household_sales_demo = demographics.merge(
-    household_sales,
-    how = "inner",
-    left_on =["household_key"],
-    right_on = ["household_key"]
-)
-household_sales_demo.head()
+📊 1. Sales Contribution by Age Group
+Methodology
+Total sales were aggregated by customer age group to evaluate which demographic segments contribute most to overall revenue.
 
 (household_sales_demo
     .groupby("AGE_DESC", observed = False)
@@ -22,18 +14,26 @@ household_sales_demo.head()
     .plot.bar()
 )
 
-(household_sales_demo
-    .groupby("INCOME_DESC", observed = False)
-    .agg({"SALES_VALUE" : "sum"})
-    .sort_values("SALES_VALUE", ascending = False)
-    .plot.bar()
-)
+Insight
+Middle-aged customer groups contribute the highest share of total sales, indicating stronger purchasing activity and higher revenue contribution from these segments.
+
+🌡️ 2. Spending Behavior by Age & Household Type
+Methodology
+A pivot table was used to analyze average sales across combinations of age groups and household composition. 
+This enables a multi-dimensional view of customer spending behavior.
 
 household_sales_demo.pivot_table(
-    index = ["AGE_DESC"],
-    columns = ["HH_COMP_DESC"],
-    values = "SALES_VALUE",
-    aggfunc = "mean",
-    margins = True,
-    observed = False
-).style.background_gradient(cmap = "RdYlGn", axis = None)
+    index=["AGE_DESC"],
+    columns=["HH_COMP_DESC"],
+    values="SALES_VALUE",
+    aggfunc="mean",
+    margins=True,
+    observed=False
+).style.background_gradient(cmap="RdYlGn", axis=None)
+
+Insight
+Households with children tend to exhibit higher average spending levels, particularly in the 35–54 age groups. 
+This suggests that both age and household composition significantly influence purchasing behavior.
+
+
+
