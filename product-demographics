@@ -1,0 +1,27 @@
+🧠 Product Category × Demographics Analysis (Heatmap)
+
+🎯 Objective
+Analyze how product category sales vary across customer age groups to identify demographic-driven purchasing patterns and high-value customer segments.
+
+🔧 Methodology
+A pivot table was created to aggregate total sales by product department and customer age group. This matrix was used to generate a heatmap for visual comparison of spending intensity across segments.
+merged.pivot_table(
+    index=["DEPARTMENT"],
+    columns=["AGE_DESC"],
+    values="SALES_VALUE",
+    aggfunc="sum",
+    observed=False
+)
+
+📊 Insight
+The analysis indicates that core retail categories such as GROCERY, DELI, DRUG GM, PRODUCE, and KIOSK-GAS consistently generate the highest sales across all age groups.
+Spending intensity is highest among 35–54 year-old customers, suggesting that this segment represents the primary revenue driver. 
+In contrast, younger customers (19–24) show more selective purchasing behavior, while older segments (55+) exhibit lower but more stable consumption patterns focused on essential goods.
+
+💼 Business Value
+This analysis supports:
+Category-level demand understanding
+Age-based customer segmentation
+Targeted marketing strategies
+Product assortment optimization
+Customer value identification
